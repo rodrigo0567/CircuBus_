@@ -92,7 +92,8 @@ public class TelaDeLogin extends JFrame {
                     dispose();
 
                     SwingUtilities.invokeLater(() -> {
-                        ChatAluno chatAluno = new ChatAluno(username);
+                        TelaPrincipal telaPrincipal = new TelaPrincipal(username);
+                        telaPrincipal.setVisible(true);
                     });
                 } else {
                     JOptionPane.showMessageDialog(TelaDeLogin.this, "Login falhou. Tente novamente.");
@@ -104,7 +105,7 @@ public class TelaDeLogin extends JFrame {
     }
 
     private boolean verificarLogin(String username, String password) {
-        return "Rodrigo".equals(username) && "rodrigo0567".equals(password);
+        return "r".equals(username) && "r".equals(password);
     }
 
     public static void main(String[] args) {
@@ -114,3 +115,4 @@ public class TelaDeLogin extends JFrame {
         });
     }
 }
+
