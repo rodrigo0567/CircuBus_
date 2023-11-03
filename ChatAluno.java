@@ -25,37 +25,44 @@ public class ChatAluno {
         this.nomeUsuario = nomeUsuario;
         frame = new JFrame("Chat Aluno");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new BorderLayout());
-        frame.getContentPane().setBackground(new Color(0, 0, 64));
+
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setBackground(Color.BLACK);
 
         try {
             BufferedImage logoImage = ImageIO.read(new File("C:\\Users\\rodri\\Documents\\Atividades_POO\\Atividades\\src\\Avaliação_POO\\LOGOCIRCUBUS.png"));
             ImageIcon logoIcon = new ImageIcon(logoImage);
-            ImageIcon logoIconResized = new ImageIcon(logoIcon.getImage().getScaledInstance(100, 50, Image.SCALE_SMOOTH));
+            ImageIcon logoIconResized = new ImageIcon(logoIcon.getImage().getScaledInstance(150, 130, Image.SCALE_SMOOTH));
             JLabel logoLabel = new JLabel(logoIconResized);
             JPanel logoPanel = new JPanel();
             logoPanel.add(logoLabel);
-
-            frame.add(logoPanel, BorderLayout.WEST);
+            mainPanel.add(logoPanel, BorderLayout.WEST);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        areaChat = new JTextArea(10, 40);
+        areaChat = new JTextArea(20, 40);
         areaChat.setEditable(false);
         areaChat.setWrapStyleWord(true);
         areaChat.setLineWrap(true);
-        areaChat.setBackground(Color.WHITE);
-        JScrollPane scrollPane = new JScrollPane(areaChat);
-        frame.add(scrollPane, BorderLayout.CENTER);
 
-        campoMensagem = new JTextField();
-        frame.add(campoMensagem, BorderLayout.SOUTH);
+        JScrollPane scrollPane = new JScrollPane(areaChat);
+        mainPanel.add(scrollPane, BorderLayout.CENTER);
+
+        campoMensagem = new JTextField(30);
+        JPanel bottomPanel = new JPanel(new BorderLayout());
+        bottomPanel.add(campoMensagem, BorderLayout.WEST);
 
         JButton botaoEnviar = new JButton("Enviar");
         botaoEnviar.setBackground(Color.CYAN);
         botaoEnviar.setForeground(Color.WHITE);
-        frame.add(botaoEnviar, BorderLayout.EAST);
+        bottomPanel.add(botaoEnviar, BorderLayout.EAST);
+
+        JButton botaoSair = new JButton("Sair");
+        botaoSair.setBackground(Color.CYAN);
+        botaoSair.setForeground(Color.WHITE);
+        mainPanel.add(botaoSair, BorderLayout.EAST);
+        mainPanel.add(bottomPanel, BorderLayout.SOUTH);
 
         botaoEnviar.addActionListener(new ActionListener() {
             @Override
@@ -64,6 +71,18 @@ public class ChatAluno {
             }
         });
 
+        botaoSair.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose(); // Fecha a janela do chat do aluno
+                SwingUtilities.invokeLater(() -> {
+                    TelaPrincipal telaPrincipal = new TelaPrincipal(nomeUsuario);
+                    telaPrincipal.setVisible(true);
+                });
+            }
+        });
+
+        frame.add(mainPanel);
         frame.pack();
         frame.setVisible(true);
 
