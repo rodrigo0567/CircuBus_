@@ -62,12 +62,17 @@ public class ChatAluno {
         JButton botaoSair = new JButton("Sair");
         botaoSair.setBackground(Color.CYAN);
         botaoSair.setForeground(Color.WHITE);
-        bottomPanel.add(botaoSair, BorderLayout.CENTER); // Corrigido para adicionar ao centro
+        bottomPanel.add(botaoSair, BorderLayout.CENTER);
         mainPanel.add(bottomPanel, BorderLayout.SOUTH);
 
         botaoEnviar.addActionListener(e -> enviarMensagem(campoMensagem.getText()));
 
-        botaoSair.addActionListener(e -> frame.dispose()); // Corrigido para fechar apenas a janela do chat
+        botaoSair.addActionListener(e -> {
+            frame.dispose();
+            TelaPrincipal telaPrincipal = new TelaPrincipal(nomeUsuario);
+            telaPrincipal.mostrarTela();
+                    });
+
 
         frame.add(mainPanel);
         frame.pack();
