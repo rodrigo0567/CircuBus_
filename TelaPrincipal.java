@@ -80,10 +80,12 @@ public class TelaPrincipal extends JFrame {
                 btnSair.setForeground(Color.WHITE);
                 btnSair.addActionListener(e -> {
                         dispose();
-                        SwingUtilities.invokeLater(TelaDeLogin::new);
+                        SwingUtilities.invokeLater(() -> {
+                                TelaDeLogin telaDeLogin = new TelaDeLogin();
+                                telaDeLogin.mostrarTela();
+                        });
                 });
                 panelBotoes.add(btnSair);
-
                 add(panelBotoes, BorderLayout.SOUTH);
 
                 setLocationRelativeTo(null);
@@ -94,6 +96,10 @@ public class TelaPrincipal extends JFrame {
                         TelaPrincipal telaPrincipal = new TelaPrincipal("NomeDoUsuario");
                         telaPrincipal.setVisible(true);
                 });
+        }
+
+        public void mostrarTela() {
+                setVisible(true);
         }
 }
 
