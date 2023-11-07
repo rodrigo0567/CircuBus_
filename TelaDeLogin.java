@@ -18,12 +18,12 @@ public class TelaDeLogin extends JFrame {
         setLayout(new BorderLayout());
 
         JPanel mainPanel = new JPanel(new BorderLayout());
-        mainPanel.setBackground(new Color(0, 0, 64)); // Cor azul marinho escuro
+        mainPanel.setBackground(new Color(0, 0, 64)); 
 
         try {
             BufferedImage logoImage = ImageIO.read(new File("C:\\Users\\rodri\\Documents\\Atividades_POO\\Atividades\\src\\Avaliação_POO\\LOGOCIRCUBUS.png"));
             ImageIcon logoIcon = new ImageIcon(logoImage);
-            ImageIcon logoIconResized = new ImageIcon(logoIcon.getImage().getScaledInstance(200, 150, Image.SCALE_SMOOTH)); // Tamanho médio
+            ImageIcon logoIconResized = new ImageIcon(logoIcon.getImage().getScaledInstance(200, 150, Image.SCALE_SMOOTH)); 
             JLabel logoLabel = new JLabel(logoIconResized);
             mainPanel.add(logoLabel, BorderLayout.NORTH);
         } catch (IOException e) {
@@ -31,7 +31,7 @@ public class TelaDeLogin extends JFrame {
         }
 
         JPanel loginPanel = new JPanel(new BorderLayout());
-        loginPanel.setOpaque(false); // Torna o painel de login transparente
+        loginPanel.setOpaque(false); 
         usernameField = new JTextField();
         passwordField = new JPasswordField();
         JButton loginButton = new JButton("Login");
@@ -62,12 +62,12 @@ public class TelaDeLogin extends JFrame {
         try {
             BufferedImage logoImage1 = ImageIO.read(new File("C:\\Users\\rodri\\Documents\\Atividades_POO\\Atividades\\src\\Avaliação_POO\\LogoUF.png"));
             ImageIcon logoIcon1 = new ImageIcon(logoImage1);
-            ImageIcon logoIconResized1 = new ImageIcon(logoIcon1.getImage().getScaledInstance(40, 60, Image.SCALE_SMOOTH)); // Tamanho pequeno
+            ImageIcon logoIconResized1 = new ImageIcon(logoIcon1.getImage().getScaledInstance(40, 60, Image.SCALE_SMOOTH));
             JLabel logoLabel1 = new JLabel(logoIconResized1);
             logosPanel.add(logoLabel1);
             BufferedImage logoImage2 = ImageIO.read(new File("C:\\Users\\rodri\\Documents\\Atividades_POO\\Atividades\\src\\Avaliação_POO\\LOGOCI.png"));
             ImageIcon logoIcon2 = new ImageIcon(logoImage2);
-            ImageIcon logoIconResized2 = new ImageIcon(logoIcon2.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH)); // Tamanho pequeno
+            ImageIcon logoIconResized2 = new ImageIcon(logoIcon2.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH));
             JLabel logoLabel2 = new JLabel(logoIconResized2);
             logosPanel.add(logoLabel2);
         } catch (IOException e) {
