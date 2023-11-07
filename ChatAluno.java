@@ -24,7 +24,7 @@ public class ChatAluno {
     public ChatAluno(String nomeUsuario) {
         this.nomeUsuario = nomeUsuario;
         frame = new JFrame("Chat Aluno");
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Mudança para DISPOSE_ON_CLOSE
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); 
 
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(Color.BLACK);
