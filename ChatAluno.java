@@ -24,13 +24,14 @@ public class ChatAluno {
     public ChatAluno(String nomeUsuario) {
         this.nomeUsuario = nomeUsuario;
         frame = new JFrame("Chat Aluno");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Mudança para DISPOSE_ON_CLOSE
 
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(Color.BLACK);
 
         try {
-            BufferedImage logoImage = ImageIO.read(new File("C:\\Users\\rodri\\Documents\\Atividades_POO\\Atividades\\src\\Avaliação_POO\\LOGOCIRCUBUS.png"));
+            InputStream imgStream = getClass().getResourceAsStream("/Avaliação_POO/LOGOCIRCUBUS.png");
+            BufferedImage logoImage = ImageIO.read(imgStream);
             ImageIcon logoIcon = new ImageIcon(logoImage);
             ImageIcon logoIconResized = new ImageIcon(logoIcon.getImage().getScaledInstance(150, 130, Image.SCALE_SMOOTH));
             JLabel logoLabel = new JLabel(logoIconResized);
@@ -61,26 +62,12 @@ public class ChatAluno {
         JButton botaoSair = new JButton("Sair");
         botaoSair.setBackground(Color.CYAN);
         botaoSair.setForeground(Color.WHITE);
-        mainPanel.add(botaoSair, BorderLayout.EAST);
+        bottomPanel.add(botaoSair, BorderLayout.CENTER); // Corrigido para adicionar ao centro
         mainPanel.add(bottomPanel, BorderLayout.SOUTH);
 
-        botaoEnviar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enviarMensagem(campoMensagem.getText());
-            }
-        });
+        botaoEnviar.addActionListener(e -> enviarMensagem(campoMensagem.getText()));
 
-        botaoSair.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose(); // Fecha a janela do chat do aluno
-                SwingUtilities.invokeLater(() -> {
-                    TelaPrincipal telaPrincipal = new TelaPrincipal(nomeUsuario);
-                    telaPrincipal.setVisible(true);
-                });
-            }
-        });
+        botaoSair.addActionListener(e -> frame.dispose()); // Corrigido para fechar apenas a janela do chat
 
         frame.add(mainPanel);
         frame.pack();
@@ -95,22 +82,19 @@ public class ChatAluno {
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-            Thread threadReceberMensagens = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        String linha;
-                        while ((linha = in.readLine()) != null) {
-                            final String mensagemRecebida = linha;
-                            SwingUtilities.invokeLater(() -> {
-                                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-                                String hora = sdf.format(new Date());
-                                exibirMensagem(nomeUsuario + " [" + hora + "]: " + mensagemRecebida);
-                            });
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
+            Thread threadReceberMensagens = new Thread(() -> {
+                try {
+                    String linha;
+                    while ((linha = in.readLine()) != null) {
+                        final String mensagemRecebida = linha;
+                        SwingUtilities.invokeLater(() -> {
+                            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+                            String hora = sdf.format(new Date());
+                            exibirMensagem(nomeUsuario + " [" + hora + "]: " + mensagemRecebida);
+                        });
                     }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             });
             threadReceberMensagens.start();
@@ -130,11 +114,18 @@ public class ChatAluno {
             campoMensagem.setText("");
         }
     }
+    public void mostrarChat() {
+        frame.setVisible(true);
+    }
 
     public static void main(String[] args) {
         String nomeUsuario = JOptionPane.showInputDialog("Informe seu nome de usuário:");
-        SwingUtilities.invokeLater(() -> {
-            ChatAluno chatAluno = new ChatAluno(nomeUsuario);
-        });
+        if (nomeUsuario != null && !nomeUsuario.isEmpty()) {
+            SwingUtilities.invokeLater(() -> {
+                ChatAluno chatAluno = new ChatAluno(nomeUsuario);
+            });
+        } else {
+            JOptionPane.showMessageDialog(null, "Nome de usuário inválido", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }
