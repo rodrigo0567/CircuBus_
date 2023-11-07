@@ -114,4 +114,8 @@ public class TelaDeLogin extends JFrame {
             loginFrame.setVisible(true);
         });
     }
+
+    public void mostrarTela() {
+        setVisible(true);
+    }
 }
